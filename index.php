@@ -1,4 +1,20 @@
-<?php require_once('header.php');?>
+<?php 
+require_once('config/Database.php');
+require_once('class/Report_repair.php');
+require_once('class/Booking.php');
+
+$connectDB = new Database_General();
+$db = $connectDB->getConnection();
+
+// Initialize UserLogin class
+$report = new Report_repair($db);
+                
+// Initialize UserLogin class
+$booking = new Booking($db);
+
+
+require_once('header.php');
+?>
 <body class="hold-transition sidebar-mini layout-fixed light-mode">
 <div class="wrapper">
 
@@ -40,16 +56,10 @@
                     </div>";
                 }
 
-                require_once('config/Database.php');
-                require_once('class/Report_repair.php');
 
-                $connectDB = new Database_General();
-                $db = $connectDB->getConnection();
-                
-                // Initialize UserLogin class
-                $report = new Report_repair($db);
 
-                $reportCountAll = count($report->getReport());
+
+                $reportCountAll = $report->getReport();
                 $report_wait = $report->countReports(0);
                 $report_processing = $report->countReports(1);
                 $report_waiting_materials = $report->countReports(2);
@@ -67,11 +77,6 @@
             <div class="row">
                 <?php
 
-                require_once('class/Booking.php');
-
-                
-                // Initialize UserLogin class
-                $booking = new Booking($db);
 
                 $bookingCountAll = count($booking->getbooking());
                 $booking_Pending = $booking->countbookings(0);

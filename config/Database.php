@@ -5,6 +5,8 @@
         private $db = "phichaia_student";
         private $username = "phichaia_rpz";
         private $password = "r9u06D#e9";
+        // private $username = "root";
+        // private $password = "";
         public $conn;
 
         public function getConnection() {
@@ -27,6 +29,8 @@
         private $db = "phichaia_general";
         private $username = "phichaia_rpz";
         private $password = "r9u06D#e9";
+        // private $username = "root";
+        // private $password = "";
         public $conn;
 
         public function getConnection() {

@@ -20,13 +20,20 @@ class Report_repair {
     }
 
     public function getReport() {
-        $sql = "SELECT * FROM {$this->table} 
-        ORDER BY id DESC
-        ";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':teach_id', $teachId, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $sql = "
+            SELECT count(id) as total FROM {$this->table}
+            ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(); // Removed bindParam for teach_id
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($result) {
+                    return $result['total'];
+                }
+                return false;
+        } catch (PDOException $e) {
+            throw new Exception('Database error: ' . $e->getMessage());
+        }
     }
 
     // Delete a report by id
@@ -39,7 +46,7 @@ class Report_repair {
 
     public function getStatus($id) {
         try {
-            $stmt = $this->pdo->prepare("SELECT status FROM report_repair WHERE id = :id");
+            $stmt = $this->pdo->prepare("SELECT status FROM {$this->table} WHERE id = :id");
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
