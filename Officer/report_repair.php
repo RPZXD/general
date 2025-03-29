@@ -186,10 +186,10 @@ require_once('header.php');
         <div class="container-fluid">
             <div class="col-md-12">
                 <div class="callout callout-success text-center">
-                    <h3 class="fw-bold bt-2">รายการแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย<br></h3>
-                    <hr>
+                    <h3 class="fw-bold bt-2 text-bold text-lg">รายการแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย<br></h3>
+                    <hr class="borer-2 border-blue-500 my-3">
                     <div class="text-left">
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#addReportModal">➕ บันทึกแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย ➕</button>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#addReportModal"><i class="fas fa-plus"></i> บันทึกแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย <i class="fas fa-plus"></i></button>
                         
                     </div>
                     <div class="row">
@@ -444,7 +444,7 @@ document.getElementById('addReportForm').addEventListener('submit', function(eve
             $('#record_table tbody').empty();
 
             if (response.length === 0) {
-                $('#record_table tbody').append('<tr><td colspan="6" class="text-center">ไม่พบข้อมูล</td></tr>');
+                $('#record_table tbody').append('<tr><td colspan="9" class="text-center">ไม่พบข้อมูล</td></tr>');
             } else {
                 $.each(response, function(index, data) {
                     var item = data.report; // ใช้ข้อมูลในฟิลด์ 'report'

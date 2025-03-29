@@ -288,10 +288,10 @@ require_once('header.php');
         <div class="container-fluid">
             <div class="col-12 mx-auto">
                 <div class="callout callout-success text-center">
-                    <h3 class="fw-bold bt-2">รายการบันทึกห้องประชุม <br></h3>
-                    <hr>
+                    <h3 class="fw-bold bt-2 text-lg text-bold">รายการบันทึกห้องประชุม <br></h3>
+                    <hr class="border-2 border-blue-500 my-3">
                     <h5>
-                        <p class="text-left text-bold text-danger">หมายเหตุ: คลิกที่วันที่เพื่อจองห้องประชุม </p>
+                        <p class="text-left text-bold text-red-500 mb-3">หมายเหตุ: คลิกที่วันที่เพื่อจองห้องประชุม </p>
                         <p class="text-left"><button id="showBookingsBtn" class="btn-lg btn-primary mb-3">แสดงรายการจองห้องประชุม</button></p>
                         
                     </h5>
