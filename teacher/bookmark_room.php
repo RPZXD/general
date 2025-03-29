@@ -37,71 +37,11 @@ require_once('header.php');
 
 
 ?>
-<style>
-    .form-check-input {
-        transform: scale(2);
-        margin-right: 30px;
-    }
-    .switch-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-    .switch-group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-        flex: 1 1 45%; /* Adjust width to fit two items per row */
-        max-width: 45%; /* Ensure max width */
-    }
-    .switch-group .switch-label {
-        margin-left: 10px;
-        flex: 1; /* Allow label to take available space */
-    }
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 34px;
-        height: 20px;
-    }
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        transition: .4s;
-        border-radius: 34px;
-    }
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 12px;
-        width: 12px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
-    }
-    input:checked + .slider {
-        background-color: #2196F3;
-    }
-    input:checked + .slider:before {
-        transform: translateX(14px);
-    }
-</style>
+
 <body class="hold-transition sidebar-mini layout-fixed light-mode">
 <div class="wrapper">
 
-    <?php require_once('warpper.php');?>
+    <?php require_once('wrapper.php');?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -347,8 +287,8 @@ require_once('header.php');
         <div class="container-fluid">
             <div class="col-12 mx-auto">
                 <div class="callout callout-success text-center">
-                    <h3 class="fw-bold bt-2">รายการบันทึกห้องประชุม <br></h3>
-                    <hr>
+                    <h3 class="fw-bold bt-2 text-bold text-lg">รายการบันทึกห้องประชุม <br></h3>
+                    <hr class="border-2 border-blue-500 my-3">
                     <h5>
                         <p class="text-left text-bold text-danger">หมายเหตุ: คลิกที่วันที่เพื่อจองห้องประชุม </p>
                         <p class="text-right"><button id="showBookingsBtn" class="btn btn-danger mb-3">ลบรายการที่จอง</button></p>
@@ -664,6 +604,6 @@ document.getElementById('addBookmarkForm').addEventListener('submit', function (
 
 
 
-<?php require_once('scirpt.php');?>
+<?php require_once('script.php');?>
 </body>
 </html>

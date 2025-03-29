@@ -1,23 +1,33 @@
 <?php 
 require_once('header.php');
-if (isset($_SESSION['Teacher_login'])) {
-    header("location: teacher/index.php");
-}else if (isset($_SESSION['Director_login'])) {
-    header("location: director/index.php");
-}else if (isset($_SESSION['Officer_login'])) {
-    header("location: groupleader/index.php");
-}else if (isset($_SESSION['Officer_login'])) {
-    header("location: Officer/index.php");
-}else if (isset($_SESSION['Admin_login'])) {
-    header("location: admin/index.php");
-}else if (isset($_SESSION['Student_login'])) {
-    header("location: student/index.php");
+session_start();
+include_once("class/Utils.php");
+$bs = new Bootstrap();
+
+function redirectUser() {
+    $roles = [
+        'Teacher_login' => 'teacher/index.php',
+        'Director_login' => 'director/index.php',
+        'Group_leader_login' => 'groupleader/index.php',
+        'Officer_login' => 'officer/index.php',
+        'Admin_login' => 'admin/index.php',
+        'Student_login' => 'student/index.php'
+    ];
+
+    foreach ($roles as $sessionKey => $redirectPath) {
+        if (isset($_SESSION[$sessionKey])) {
+            header("Location: $redirectPath");
+            exit(); // Prevent further execution
+        }
+    }
 }
+
+redirectUser();
 ?>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-    <?php require_once('warpper.php');?>
+    <?php require_once('wrapper.php');?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -50,7 +60,6 @@ if (isset($_SESSION['Teacher_login'])) {
               <div class="card-body text-center">
               <?php 
 
-                session_start();
                 include_once("config/Database.php");
                 include_once("class/UserLogin.php");
                 include_once("class/Utils.php");
@@ -85,44 +94,22 @@ if (isset($_SESSION['Teacher_login'])) {
                     } else {
                         if ($user->verifyPassword()) {
                             $userRole = $user->getUserRole();
-                            $allowedUserRolesForTeacher = ['T', 'ADM', 'VP', 'OF', 'DIR'];
-                            $allowedUserRolesForOfficer = ['ADM', 'OF'];
-                            $allowedUserRolesForAdmin = ['ADM'];
+                            $allowedUserRoles = [
+                                'Teacher' => ['T', 'ADM', 'VP', 'OF', 'DIR'],
+                                'Officer' => ['ADM', 'OF'],
+                                'Admin' => ['ADM']
+                            ];
                             
-                            if (in_array($userRole, $allowedUserRolesForTeacher) && $role === 'Teacher') {
-                                // Set session variables for a teacher
-                                $_SESSION['Teacher_login'] = $_SESSION['user'];
+                            if (in_array($userRole, $allowedUserRoles[$role])) {
+                                $_SESSION[$role . '_login'] = $_SESSION['user'];
 
                                 $sw2 = new SweetAlert2(
                                     'ลงชื่อเข้าสู่ระบบเรียบร้อย',
                                     'success',
-                                    'teacher/index.php' // Redirect URL
+                                    strtolower($role) . '/index.php' // Redirect URL
                                 );
                                 $sw2->renderAlert();
-                            } 
-                            else if (in_array($userRole, $allowedUserRolesForOfficer) && $role === 'Officer') {
-                                // Set session variables for a Officer
-                                $_SESSION['Officer_login'] = $_SESSION['user'];
-
-                                $sw2 = new SweetAlert2(
-                                    'ลงชื่อเข้าสู่ระบบเรียบร้อย',
-                                    'success',
-                                    'Officer/index.php' // Redirect URL
-                                );
-                                $sw2->renderAlert();
-                            } 
-                            else if (in_array($userRole, $allowedUserRolesForAdmin) && $role === 'Admin') {
-                                // Set session variables for a Officer
-                                $_SESSION['Admin_login'] = $_SESSION['user'];
-
-                                $sw2 = new SweetAlert2(
-                                    'ลงชื่อเข้าสู่ระบบเรียบร้อย',
-                                    'success',
-                                    'Admin/index.php' // Redirect URL
-                                );
-                                $sw2->renderAlert();
-                            } 
-                            else {
+                            } else {
                                 $sw2 = new SweetAlert2(
                                     'บทบาทผู้ใช้ไม่ถูกต้อง',
                                     'error',
@@ -163,9 +150,9 @@ if (isset($_SESSION['Teacher_login'])) {
                                 <label for="role" class="col-sm-6 control-label">ประเภทผู้ใช้</label>
                                 <div class="col-sm-12">
                                     <select class="form-control text-center" name="txt_role">
-                                        <option value="teacher" selected="selected">ครู</option>
+                                        <option value="Teacher" selected="selected">ครู</option>
                                         <option value="Officer">เจ้าหน้าที่</option>
-                                        <option value="Director">ผู้บริหาร</option>
+                                        <!-- <option value="Director">ผู้บริหาร</option> -->
                                         <option value="Admin">Admin</option>
                                     </select>
                                 </div>
@@ -204,6 +191,6 @@ if (isset($_SESSION['Teacher_login'])) {
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
-<?php require_once('scirpt.php');?>
+<?php require_once('script.php');?>
 </body>
 </html>

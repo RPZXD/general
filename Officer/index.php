@@ -38,7 +38,7 @@ require_once('header.php');
 <body class="hold-transition sidebar-mini layout-fixed light-mode">
 <div class="wrapper">
 
-    <?php require_once('warpper.php');?>
+    <?php require_once('wrapper.php');?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -86,6 +86,6 @@ require_once('header.php');
 
 
 
-<?php require_once('scirpt.php');?>
+<?php require_once('script.php');?>
 </body>
 </html>

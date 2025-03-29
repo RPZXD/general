@@ -46,7 +46,7 @@ require_once('header.php');
 <body class="hold-transition sidebar-mini layout-fixed light-mode">
 <div class="wrapper">
 
-    <?php require_once('warpper.php');?>
+    <?php require_once('wrapper.php');?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -66,7 +66,7 @@ require_once('header.php');
         <div class="modal-dialog modal-xl" role="document"> <!-- ใช้ modal-xl สำหรับขยาย modal -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addReportModalLabel">
+                    <h5 class="modal-title " id="addReportModalLabel">
                     ➕ บันทึกแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย ➕
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -153,10 +153,10 @@ require_once('header.php');
         <div class="container-fluid">
             <div class="col-md-12">
                 <div class="callout callout-success text-center">
-                    <h3 class="fw-bold bt-2">รายการแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย<br></h3>
-                    <hr>
+                    <h3 class="fw-bold bt-2 text-blue-500 text-bold text-lg mt-3">รายการแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย<br></h3>
+                    <hr class="border-2 border-gray-500 my-3">
                     <div class="text-left">
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#addReportModal">➕ บันทึกแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย ➕</button>
+                        <button class="btn bg-red-500 text-white " data-toggle="modal" data-target="#addReportModal"><i class="fa fa-plus"></i> บันทึกแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย <i class="fa fa-plus"></i></button>
                         
                     </div>
                     <div class="row">
@@ -608,6 +608,6 @@ document.getElementById('addReportForm').addEventListener('submit', function(eve
 
 
 
-<?php require_once('scirpt.php');?>
+<?php require_once('script.php');?>
 </body>
 </html>

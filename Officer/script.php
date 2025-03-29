@@ -1,44 +1,28 @@
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const themeToggle = document.getElementById('theme-toggle');
-      const body = document.body;
-      const navbar = document.querySelector('.main-header.navbar');
-      const preloader = document.querySelector('.preloader');
+  document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const navbar = document.querySelector('.main-header.navbar');
 
-      // Load saved theme
-      const savedTheme = localStorage.getItem('theme') || 'light-mode';
-      body.classList.remove('light-mode', 'dark-mode');
-      body.classList.add(savedTheme);
-      navbar.classList.toggle('navbar-light', savedTheme === 'light-mode');
-      navbar.classList.toggle('navbar-dark', savedTheme === 'dark-mode');
-      themeToggle.checked = savedTheme === 'dark-mode';
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'light-mode';
+    body.classList.remove('light-mode', 'dark-mode');
+    body.classList.add(savedTheme);
+    navbar.classList.toggle('bg-white', savedTheme === 'light-mode');
+    navbar.classList.toggle('bg-gray-900', savedTheme === 'dark-mode');
+    themeToggle.checked = savedTheme === 'dark-mode';
 
-      // Add event listener for the switch
-      themeToggle.addEventListener('change', function() {
-        if (themeToggle.checked) {
-          body.classList.remove('light-mode');
-          body.classList.add('dark-mode');
-          navbar.classList.remove('navbar-light');
-          navbar.classList.add('navbar-dark');
-          localStorage.setItem('theme', 'dark-mode');
-        } else {
-          body.classList.remove('dark-mode');
-          body.classList.add('light-mode');
-          navbar.classList.remove('navbar-dark');
-          navbar.classList.add('navbar-light');
-          localStorage.setItem('theme', 'light-mode');
-        }
-      });
-
-      // Preloader fade out
-      window.addEventListener('load', function() {
-        preloader.style.opacity = '0';
-        setTimeout(function() {
-          preloader.style.display = 'none';
-        }, 600);
-      });
+    // Add event listener for the switch
+    themeToggle.addEventListener('change', function() {
+      const isDarkMode = themeToggle.checked;
+      body.classList.toggle('light-mode', !isDarkMode);
+      body.classList.toggle('dark-mode', isDarkMode);
+      navbar.classList.toggle('bg-white', !isDarkMode);
+      navbar.classList.toggle('bg-gray-900', isDarkMode);
+      localStorage.setItem('theme', isDarkMode ? 'dark-mode' : 'light-mode');
     });
-  </script>
+  });
+</script>
 <!-- jQuery first -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

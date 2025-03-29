@@ -14,11 +14,12 @@ $booking = new Booking($db);
 
 
 require_once('header.php');
+require_once('config/Setting.php');
 ?>
 <body class="hold-transition sidebar-mini layout-fixed light-mode">
 <div class="wrapper">
 
-    <?php require_once('warpper.php');?>
+    <?php require_once('wrapper.php');?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -28,9 +29,9 @@ require_once('header.php');
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0"></h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+          </div>
+        </div>
+      </div>
     </div>
     <!-- /.content-header -->
 
@@ -163,6 +164,7 @@ require_once('header.php');
     });
   });
 </script>
-<?php require_once('scirpt.php');?>
+
+<?php require_once('script.php');?>
 </body>
 </html>

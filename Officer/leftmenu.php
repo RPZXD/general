@@ -1,36 +1,35 @@
 
+
 <?php
 function createNavItem($href, $iconClass, $text) {
     return '
     <li class="nav-item">
-        <a href="' . htmlspecialchars($href) . '" class="nav-link ">
+        <a href="' . htmlspecialchars($href) . '" class="nav-link">
             <i class="nav-icon fas ' . htmlspecialchars($iconClass) . '"></i>
             <p>' . htmlspecialchars($text) . '</p>
         </a>
     </li>';
 }
 
-
 function createNavItemName($avatar, $text) {
     return '
     <li class="nav-item">
-        <div  class="nav-link text-center">
-            <img src="https://std.phichai.ac.th/teacher/uploads/phototeach/' . $avatar .'" alt="User Avatar" class="user-avatar img-circle elevation-2" style="width: 40px; height: 40px;">
+        <div class="nav-link text-center">
+            <img src="' . $avatar .'" alt="User Avatar" class="user-avatar rounded-full w-28 h-28 mx-auto">
         </div>
-        <div  class="nav-link text-center">
-            <p class="text-light text-wold">'. $text . '</p>
+        <div class="nav-link text-center">
+            <p class="text-white font-bold">'. $text . '</p>
         </div>
-        <div  class="nav-link text-center">
-            <p class="text-light text-wold">ตำแหน่ง : เจ้าหน้าที่</p>
+        <div class="nav-link text-center">
+            <p class="text-white font-bold">ตำแหน่ง : เจ้าหน้าที่</p>
         </div>
-
     </li>';
 }
 
+echo createNavItemName(htmlspecialchars($setting->getImgProfile().$userData['Teach_photo']), htmlspecialchars($userData['Teach_name']));
 
-echo createNavItemName(htmlspecialchars($userData['Teach_photo']), htmlspecialchars($userData['Teach_name']));
-
-echo "<hr>";
+// echo "<hr style='border: 1px solid #ffffff;'>";
+echo "<br>";
 
 echo createNavItem('index.php', 'fas fa-home', 'หน้าหลัก');
 echo createNavItem('report_repair.php', 'fas fa-clipboard', 'รายงานการแจ้งซ่อม');
