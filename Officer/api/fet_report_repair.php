@@ -24,7 +24,13 @@ try {
     $user = new User($dbUser); // Connect with the users database
 
     // Fetch report data
-    $reportData = $reports->getReport();
+    $reportData = $reports->getReportRepair();
+
+    if (empty($reportData)) {
+        http_response_code(404);
+        echo json_encode(['error' => 'No reports found']);
+        exit();
+    }
 
     // Fetch user data based on teach_id
     $response = [];
@@ -33,6 +39,10 @@ try {
 
         // Get user data for this teach_id
         $userData = $user->getTeacherById($teachId);
+
+        if (empty($userData)) {
+            $userData = [['Teach_name' => '-', 'Teach_phone' => '-']]; // Default values
+        }
 
         // Combine report data with user data
         $response[] = [

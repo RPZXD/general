@@ -13,7 +13,6 @@ $query = "SELECT *
 FROM bookings 
 ORDER BY status ASC, date DESC";
 $stmt = $db->prepare($query);
-$stmt->bindParam(':teach_id', $teach_id);
 $stmt->execute();
 
 $bookings = [];

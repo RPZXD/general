@@ -109,7 +109,8 @@ $message = "
 // Insert booking data
 if ($booking->createBooking($data)) {
     echo json_encode(['success' => true, 'message' => 'Booking added successfully.']);
-    $accessToken = 'eCBHhUJpqKJ2W8EyVRk7iYRXrYpsuGscoDeX5CWE0ao';
+    // $accessToken = 'eCBHhUJpqKJ2W8EyVRk7iYRXrYpsuGscoDeX5CWE0ao';
+    $accessToken = '';
     sendLineNotifyMessage($accessToken, $message);
 } else {
     echo json_encode(['success' => false, 'message' => 'Error: Could not add booking.']);

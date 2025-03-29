@@ -5,11 +5,14 @@ session_start();
 include_once("../config/Database.php");
 include_once("../class/UserLogin.php");
 include_once("../class/Utils.php");
-
+require_once('../class/Setting.php');
 
 // Initialize database connection
 $connectDB = new Database_User();
 $db = $connectDB->getConnection();
+
+$connectDBgeneral = new Database_General();
+$dbGeneral = $connectDBgeneral->getConnection();
 
 // Initialize UserLogin class
 $user = new UserLogin($db);
@@ -32,13 +35,14 @@ if (isset($_SESSION['Officer_login'])) {
 }
 $teacher_id = $userData['Teach_id'];
 
+$config = new Setting_Config($dbGeneral);
+$locations = $config->fetchMeetingRooms();
 
 require_once('header.php');
 
-
 ?>
 
-<body class="hold-transition sidebar-mini layout-fixed light-mode">
+<body class="hold-transition sidebar-mini layout-fixed light-mode bg-gray-100 text-gray-800">
 <div class="wrapper">
 
     <?php require_once('wrapper.php');?>
@@ -98,50 +102,52 @@ require_once('header.php');
                                     <label class="text-center" for="BookmarkLocation">ห้องที่จอง: </label>
                                     <select class="form-control text-center" id="BookmarkLocation" name="BookmarkLocation" required>
                                         <option value="">เลือกห้องประชุม</option>
-                                        <option value="หอประชุมพิชัยดาบหัก">หอประชุมพิชัยดาบหัก</option>
-                                        <option value="หอประชุมภักดิ์กมล">หอประชุมภักดิ์กมล</option>
-                                        <option value="ห้องพิชยนุสรณ์">ห้องพิชยนุสรณ์</option>
-                                        <option value="ห้องโสตทัศนศึกษา">ห้องโสตทัศนศึกษา</option>
+                                        <?php 
+                                            foreach ($locations as $room) {
+                                                echo '<option value="'.$room['room_name'].'">'.$room['room_name'].' (ความจุ: '.$room['capacity'].' คน)</option>';
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-12">
-                            <div class="form-group align-items-center">
-                                <label class="text-center" for="timeSwitch">ช่วงเวลา:</label>
-                                <div class="switch-container">
-                                    <div class="switch-group">
-                                        <label class="switch">
-                                            <input type="radio" name="timeSwitch" id="morning" value="morning">
-                                            <span class="slider"></span>
-                                        </label>
-                                        <span class="switch-label">เช้า (08:00 - 12:00)</span>
-                                    </div>
-                                    <div class="switch-group">
-                                        <label class="switch">
-                                            <input type="radio" name="timeSwitch" id="afternoon" value="afternoon">
-                                            <span class="slider"></span>
-                                        </label>
-                                        <span class="switch-label">บ่าย (13:00 - 17:00)</span>
-                                    </div>
-                                    <div class="switch-group">
-                                        <label class="switch">
-                                            <input type="radio" name="timeSwitch" id="allDay" value="allDay">
-                                            <span class="slider"></span>
-                                        </label>
-                                        <span class="switch-label">ทั้งวัน (08:00 - 17:00)</span>
-                                    </div>
-                                    <div class="switch-group">
-                                        <label class="switch">
-                                            <input type="radio" name="timeSwitch" id="custom" value="custom" checked>
-                                            <span class="slider"></span>
-                                        </label>
-                                        <span class="switch-label">กำหนดเอง</span>
-                                    </div>
+
+                        <div class="w-full text-center mb-3">
+                            <label for="timeSwitch" class="block text-lg font-medium">ช่วงเวลา:</label>
+                            <div class="w-full flex flex-wrap justify-center gap-4">
+                                <div class="flex items-center space-x-2 w-1/2 sm:w-1/4">
+                                    <label class="relative inline-block w-10 h-6">
+                                    <input type="radio" name="timeSwitch" id="morning" value="morning">
+                                    <span class="custom-slider"></span>
+                                    </label>
+                                    <span class="text-sm">เช้า (08:00 - 12:00)</span>
+                                </div>
+                                <div class="flex items-center space-x-2 w-1/2 sm:w-1/4">
+                                    <label class="relative inline-block w-10 h-6">
+                                    <input type="radio" name="timeSwitch" id="afternoon" value="afternoon">
+                                    <span class="custom-slider"></span>
+                                    </label>
+                                    <span class="text-sm">บ่าย (13:00 - 17:00)</span>
+                                </div>
+                                <div class="flex items-center space-x-2 w-1/2 sm:w-1/4">
+                                    <label class="relative inline-block w-10 h-6">
+                                    <input type="radio" name="timeSwitch" id="allDay" value="allDay">
+                                    <span class="custom-slider"></span>
+                                    </label>
+                                    <span class="text-sm">ทั้งวัน (08:00 - 17:00)</span>
+                                </div>
+                                <div class="flex items-center space-x-2 w-1/2 sm:w-1/4">
+                                    <label class="relative inline-block w-10 h-6">
+                                    <input type="radio" name="timeSwitch" id="custom" value="custom" checked>
+                                    <span class="custom-slider"></span>
+                                    </label>
+                                    <span class="text-sm">กำหนดเอง</span>
                                 </div>
                             </div>
                         </div>
+
+
 
                         <div class="col-md-12">
                             <div class="form-group d-flex align-items-center">
@@ -254,9 +260,9 @@ require_once('header.php');
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
-                        <table id="bookingsTable" class="table table-bordered table-striped">
-                            <thead>
+                    <div class="table-responsive mx-auto">
+                        <table class="display table-bordered responsive" id="bookingsTable" style="width:100%;">
+                            <thead class="bg-purple-500 text-white text-center">
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th class="text-center">วันที่</th>
@@ -299,10 +305,11 @@ require_once('header.php');
                         <label for="locationFilter">เลือกห้องประชุม:</label>
                         <select id="locationFilter" class="form-control text-center">
                             <option value="">ทั้งหมด</option>
-                            <option value="หอประชุมพิชัยดาบหัก">หอประชุมพิชัยดาบหัก</option>
-                            <option value="หอประชุมภักดิ์กมล">หอประชุมภักดิ์กมล</option>
-                            <option value="ห้องพิชยนุสรณ์">ห้องพิชยนุสรณ์</option>
-                            <option value="ห้องโสตทัศนศึกษา">ห้องโสตทัศนศึกษา</option>
+                            <?php 
+                                foreach ($locations as $room) {
+                                    echo '<option value="'.$room['room_name'].'">'.$room['room_name'].' (ความจุ: '.$room['capacity'].' คน)</option>';
+                                }
+                            ?>
                         </select>
                     </div>
                     
@@ -543,8 +550,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-    document.querySelector('#bookingsTable').addEventListener('click', function(e) {
+document.querySelector('#bookingsTable').addEventListener('click', function(e) {
         if (e.target.classList.contains('delete-booking')) {
             const bookingId = e.target.getAttribute('data-id');
 
@@ -672,6 +678,10 @@ document.getElementById('addBookmarkForm').addEventListener('submit', function (
         Swal.fire('Error', 'An error occurred while processing your request.', 'error');
     });
 });
+
+
+
+
 
 </script>
 

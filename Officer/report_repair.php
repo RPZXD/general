@@ -189,14 +189,14 @@ require_once('header.php');
                     <h3 class="fw-bold bt-2 text-bold text-lg">รายการแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย<br></h3>
                     <hr class="borer-2 border-blue-500 my-3">
                     <div class="text-left">
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#addReportModal"><i class="fas fa-plus"></i> บันทึกแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย <i class="fas fa-plus"></i></button>
+                        <button class="btn bg-green-500 text-white " data-toggle="modal" data-target="#addReportModal"><i class="fas fa-plus"></i> บันทึกแจ้งซ่อมแซมทรัพย์สินประจำห้องเรียนและห้องปฏิบัติการชำรุด/เสียหาย <i class="fas fa-plus"></i></button>
                         
                     </div>
                     <div class="row">
                         <div class="col-md-12 mt-3 mb-3 mx-auto">
                             <div class="table-responsive mx-auto">
                                 <table class="display table-bordered responsive" id="record_table" style="width:100%;">
-                                    <thead class="table-dark text-white text-center">
+                                    <thead class="bg-purple-500 text-white text-center">
                                         <tr>
                                             <th style="vertical-align: middle; text-align: center; width:5%;">ลำดับ</th>
                                             <th style="vertical-align: middle; text-align: center; width:13%;">วันที่</th>
@@ -447,8 +447,8 @@ document.getElementById('addReportForm').addEventListener('submit', function(eve
                 $('#record_table tbody').append('<tr><td colspan="9" class="text-center">ไม่พบข้อมูล</td></tr>');
             } else {
                 $.each(response, function(index, data) {
-                    var item = data.report; // ใช้ข้อมูลในฟิลด์ 'report'
-                    var user = data.user[0]; // ดึงข้อมูลผู้ใช้จาก 'user'
+                    var item = data.report;
+                    var user = data.user[0];
 
                     var status = Number(item.status);
                     var statusText;
@@ -478,30 +478,29 @@ document.getElementById('addReportForm').addEventListener('submit', function(eve
                         '<td>' + item.AddLocation + '</td>' +
                         '<td>' + item.term + '</td>' +
                         '<td>' + item.pee + '</td>' +
-                        '<td>' + user.Teach_name + '</td>' +
-                        '<td>' + user.Teach_phone + '</td>' +
+                        '<td>' + (user ? user.Teach_name : '-') + '</td>' +
+                        '<td>' + (user ? user.Teach_phone : '-') + '</td>' +
                         '<td>' + statusText + '</td>' +
                         '<td>' +
-                            '<button class="btn btn-info btn-sm detail-btn my-2" onclick="showDetail(' + item.id + ')">แสดงรายละเอียด</button>' +
-                            '<button class="btn btn-warning btn-sm edit-status-btn my-2 ml-1" onclick="openEditModal(' + item.id + ', ' + item.status + ')">แก้ไขสถานะ</button>' +
-                            '<button class="btn btn-danger btn-sm delete-btn my-2 ml-1" data-id="' + item.id + '">ลบ</button>' +
+                            '<button class="btn bg-blue-500 text-white btn-sm detail-btn my-2" onclick="showDetail(' + item.id + ')">แสดงรายละเอียด</button>' +
+                            '<button class="btn bg-yellow-500 text-white btn-sm edit-status-btn my-2 ml-1" onclick="openEditModal(' + item.id + ', ' + item.status + ')">แก้ไขสถานะ</button>' +
+                            '<button class="btn bg-red-500 text-white btn-sm delete-btn my-2 ml-1" data-id="' + item.id + '">ลบ</button>' +
                         '</td>' +
                         '</tr>';
                     $('#record_table tbody').append(row);
                 });
             }
 
-            // Reinitialize DataTable with responsive settings
             $('#record_table').DataTable({
                 "pageLength": 10,
                 "paging": true,
                 "lengthChange": true,
                 "ordering": true,
-                "responsive": true // Enable responsive mode
+                "responsive": true
             });
         },
         error: function(xhr, status, error) {
-            Swal.fire('ข้อผิดพลาด', 'เกิดข้อผิดพลาดในการดึงข้อมูล', 'error');
+            Swal.fire('ข้อผิดพลาด', 'เกิดข้อผิดพลาดในการดึงข้อมูล: ' + error, 'error');
         }
     });
 }
@@ -526,6 +525,7 @@ function saveStatus() {
                 Swal.fire('สำเร็จ', 'แก้ไขสถานะสำเร็จ', 'success');
                 $('#editStatusModal').modal('hide');
                 loadTable(); // Reload table
+                window.location.reload();
             } else {
                 Swal.fire('ข้อผิดพลาด', response.message, 'error');
             }

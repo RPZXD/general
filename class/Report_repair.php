@@ -36,6 +36,15 @@ class Report_repair {
         }
     }
 
+    public function getReportRepair() {
+        $query = "SELECT * FROM {$this->table} ORDER BY id DESC";
+        $stmt = $this->pdo->prepare($query);
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
+        }
+        return false;
+    }
+
     // Delete a report by id
     public function deleteReport($id) {
         $sql = "DELETE FROM {$this->table} WHERE id = :id";
