@@ -1,33 +1,44 @@
 <?php
 
-include_once("../../config/Database.php");
-include_once("../../class/Utils.php");
+require_once '../../config/Database.php';
+require_once '../../class/Booking.php';
+require_once '../../class/UserLogin.php';
 
-// Initialize database connection
-$connectDB = new Database("phichaia_general");
-$db = $connectDB->getConnection();
+// Initialize the database connections
+$databaseUser = new Database("phichaia_student");
+$dbUser = $databaseUser->getConnection();
 
+$databaseGeneral = new Database("phichaia_general");
+$dbGeneral = $databaseGeneral->getConnection();
+
+// Initialize Booking class
+$booking = new Booking($dbGeneral);
+
+// Initialize UserLogin class
+$user = new UserLogin($dbUser);
 
 
 $query = "SELECT * 
 FROM bookings 
 ORDER BY status ASC, date DESC";
-$stmt = $db->prepare($query);
+$stmt = $dbGeneral->prepare($query);
 $stmt->execute();
 
 $bookings = [];
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $userData = $user->userData($row['teach_id'] ?? null); // Fetch user data using teach_id
     $bookings[] = [
-        'id' => $row['id'],
-        'date' => $row['date'],
-        'name' => $row['name'],
-        'location' => $row['location'],
-        'start_time' => $row['time_start'],
-        'end_time' => $row['time_end'],
-        'purpose' => $row['purpose'],
-        'status' => $row['status'],
-        'media' => $row['media']
+        'id' => $row['id'] ?? null,
+        'date' => $row['date'] ?? null,
+        'name' => $userData['Teach_name'] ?? '', // Default to empty string if not set
+        'location' => $row['location'] ?? null,
+        'start_time' => $row['time_start'] ?? null,
+        'end_time' => $row['time_end'] ?? null,
+        'purpose' => $row['purpose'] ?? null,
+        'status' => $row['status'] ?? null,
+        'media' => $row['media'] ?? null
     ];
+    
 }
 
 header('Content-Type: application/json');
