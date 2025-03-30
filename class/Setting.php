@@ -44,6 +44,14 @@ class Setting_Config {
         return $stmt->execute();
     }
 
+    // ฟังก์ชันสำหรับดึงข้อมูลรถทั้งหมด
+    public function fetchVehicles() {
+        $sql = "SELECT * FROM vehicles";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     
 }
 ?>

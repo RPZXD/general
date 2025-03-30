@@ -267,6 +267,8 @@ require_once('header.php');
                                     <th class="text-center">#</th>
                                     <th class="text-center">วันที่</th>
                                     <th class="text-center">ห้องที่จอง</th>
+                                    <th class="text-center">ผู้จอง</th>
+                                    <th class="text-center">เบอร์</th>
                                     <th class="text-center">เวลาเริ่ม</th>
                                     <th class="text-center">เวลาสิ้นสุด</th>
                                     <th class="text-center">จุดประสงค์</th>
@@ -526,6 +528,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td class="text-center">${index + 1}</td> <!-- Row number -->
                     <td class="text-center">${booking.date}</td>
                     <td class="text-center">${booking.location}</td>
+                    <td class="text-center">${booking.name}</td>
+                    <td class="text-center">${booking.tel}</td>
                     <td class="text-center">${booking.start_time}</td>
                     <td class="text-center">${booking.end_time}</td>
                     <td class="text-center">${booking.purpose}</td>
@@ -537,6 +541,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     </td>
                 `;
                 tableBody.appendChild(row);
+            });
+            $('#bookingsTable').DataTable({
+                    responsive: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/th.json' // Thai language support
+                    }
             });
 
             $('#bookingsModal').modal('show');

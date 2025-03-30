@@ -31,6 +31,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         'id' => $row['id'] ?? null,
         'date' => $row['date'] ?? null,
         'name' => $userData['Teach_name'] ?? '', // Default to empty string if not set
+        'tel' => $row['phone'] ?? '', // Default to empty string if not set
         'location' => $row['location'] ?? null,
         'start_time' => $row['time_start'] ?? null,
         'end_time' => $row['time_end'] ?? null,
