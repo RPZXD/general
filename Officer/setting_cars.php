@@ -104,39 +104,104 @@ require_once('header.php');
 </div>
 <!-- ./wrapper -->
 
-    <!-- Add Meeting Room Modal -->
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form id="addMeetingRoomForm" class="bg-white rounded-lg shadow-md p-6">
-                    <div class="modal-header flex justify-between items-center border-b pb-4">
-                        <h5 class="text-lg font-semibold" id="addModalLabel">เพิ่มห้องประชุม</h5>
-                        <button type="button" class="text-gray-500 hover:text-gray-700" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+<!-- Add Car Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="addCarForm" enctype="multipart/form-data" class="bg-white rounded-lg shadow-md p-6">
+                <div class="modal-header flex justify-between items-center border-b pb-4">
+                            <h5 class="text-lg font-semibold" id="addModalLabel">เพิ่มรถใหม่</h5>
+                            <button type="button" class="text-gray-500 hover:text-gray-700 text-3xl" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>    
+                <div class="modal-body space-y-4">
+                    <div class="form-group">
+                        <label class="block text-sm font-medium text-gray-700" for="vehicleType">ประเภทรถ</label>
+                        <select class="form-control text-center  mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="vehicleType" name="vehicleType" required>
+                            <option value="" disabled selected>กรุณาเลือกประเภทรถ</option>
+                            <option value="รถเก๋ง">รถเก๋ง</option>
+                            <option value="รถกระบะ">รถกระบะ</option>
+                            <option value="รถตู้">รถตู้</option>
+                            <option value="รถบรรทุก">รถบรรทุก</option>
+                            <option value="รถจักรยานยนต์">รถจักรยานยนต์</option>
+                        </select>
                     </div>
-                    <div class="modal-body space-y-4">
-                        <div class="form-group">
-                            <label for="roomName" class="block text-sm font-medium text-gray-700">ชื่อห้องประชุม:</label>
-                            <input type="text" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="roomName" name="room_name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="capacity" class="block text-sm font-medium text-gray-700">จำนวนคนที่สามารถบรรจุได้:</label>
-                            <input type="number" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="capacity" name="capacity" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="equipment" class="block text-sm font-medium text-gray-700">อุปกรณ์ที่มีอยู่:</label>
-                            <textarea class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="equipment" name="equipment" rows="3" required></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label class="block text-sm font-medium text-gray-700" for="licensePlate">หมายเลขทะเบียน</label>
+                        <input type="text" class="form-control text-center  mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="licensePlate" name="licensePlate" placeholder="กรอกหมายเลขทะเบียน" required>
                     </div>
-                    <div class="modal-footer flex justify-end space-x-2 border-t pt-4">
+                    <div class="form-group">
+                        <label class="block text-sm font-medium text-gray-700" for="latestMileage">เลขไมล์ล่าสุด</label>
+                        <input type="number" class="form-control text-center  mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="latestMileage" name="latestMileage" placeholder="กรอกเลขไมล์ล่าสุด" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="block text-sm font-medium text-gray-700" for="fuelLevel">ระดับน้ำมัน (%)</label>
+                        <input type="number" class="form-control text-center  mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="fuelLevel" name="fuelLevel" placeholder="กรอกระดับน้ำมัน (%)" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="block text-sm font-medium text-gray-700" for="carImage">รูปภาพรถ</label>
+                        <input type="file" class="form-control text-center file" id="carImage" name="carImage" accept="image/*" required>
+                    </div>
+                </div>
+                <div class="modal-footer flex justify-end space-x-2 border-t pt-4">
                         <button type="button" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-gray-600" data-dismiss="modal">ปิด</button>
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">บันทึก</button>
                     </div>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
+</div>
+
+<!-- Edit Car Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="editCarForm" enctype="multipart/form-data" class="bg-white rounded-lg shadow-md p-6">
+                <div class="modal-header flex justify-between items-center border-b pb-4">
+                    <h5 class="text-lg font-semibold" id="editModalLabel">แก้ไขข้อมูลรถ</h5>
+                    <button type="button" class="text-gray-500 hover:text-gray-700 text-3xl" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body space-y-4">
+                    <input type="hidden" id="editCarId" name="id">
+                    <div class="form-group">
+                        <label class="block text-sm font-medium text-gray-700" for="editVehicleType">ประเภทรถ</label>
+                        <select class="form-control text-center mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="editVehicleType" name="vehicleType" required>
+                            <option value="" disabled selected>กรุณาเลือกประเภทรถ</option>
+                            <option value="รถเก๋ง">รถเก๋ง</option>
+                            <option value="รถกระบะ">รถกระบะ</option>
+                            <option value="รถตู้">รถตู้</option>
+                            <option value="รถบรรทุก">รถบรรทุก</option>
+                            <option value="รถจักรยานยนต์">รถจักรยานยนต์</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="block text-sm font-medium text-gray-700" for="editLicensePlate">หมายเลขทะเบียน</label>
+                        <input type="text" class="form-control text-center mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="editLicensePlate" name="licensePlate" placeholder="กรอกหมายเลขทะเบียน" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="block text-sm font-medium text-gray-700" for="editLatestMileage">เลขไมล์ล่าสุด</label>
+                        <input type="number" class="form-control text-center mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="editLatestMileage" name="latestMileage" placeholder="กรอกเลขไมล์ล่าสุด" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="block text-sm font-medium text-gray-700" for="editFuelLevel">ระดับน้ำมัน (%)</label>
+                        <input type="number" class="form-control text-center mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="editFuelLevel" name="fuelLevel" placeholder="กรอกระดับน้ำมัน (%)" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="block text-sm font-medium text-gray-700" for="editCarImage">รูปภาพรถ</label>
+                        <input type="file" class="form-control text-center file" id="editCarImage" name="carImage" accept="image/*">
+                    </div>
+                </div>
+                <div class="modal-footer flex justify-end space-x-2 border-t pt-4">
+                    <button type="button" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-gray-600" data-dismiss="modal">ปิด</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script>
 $(document).ready(function () {
@@ -165,7 +230,7 @@ $(document).ready(function () {
 
                         var row = `<tr>
                             <td class="text-center">${data.id}</td>
-                            <td class="text-center flex justify-center items-center"> <img src="${data.image_url}" class="w-[25px] h-[25px] rounded-lg"></td>
+                            <td class="text-center flex justify-center items-center"> <img src="../${data.image_url}" class="w-[25px] h-[25px] rounded-lg"></td>
                             <td class="text-center">${data.vehicle_type}</td>
                             <td class="text-center">${data.license_plate}</td>
                             <td class="text-center">${mileageFormatted}</td>
@@ -214,7 +279,32 @@ $(document).ready(function () {
     }
 
     loadTable();
+
+    $('#addCarForm').on('submit', function (e) {
+            e.preventDefault();
+    
+            const formData = new FormData(this);
+    
+            $.ajax({
+                url: 'api/add_car.php', // Replace with your API endpoint
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    Swal.fire('สำเร็จ', 'เพิ่มรถใหม่เรียบร้อยแล้ว', 'success');
+                                    // โหลดตารางข้อมูลใหม่หลังจากปิด modal
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    // console.error("Add Car Error:", xhr.responseText);
+                    Swal.fire('ข้อผิดพลาด', 'ไม่สามารถเพิ่มรถได้', 'error');
+                }
+            });
+        });
 });
+
+
 
 // ฟังก์ชันอัปเดตสถานะรถ
 function updateStatus(vehicleId, isChecked) {
@@ -234,6 +324,82 @@ function updateStatus(vehicleId, isChecked) {
         }
     });
 }
+
+$(document).on('click', '.editBtn', function () {
+    const id = $(this).data('id');
+        fetch(`api/get_car.php?id=${id}`)
+            .then(response => response.json())
+            .then(data => {
+                $('#editCarId').val(data.id);
+                $('#editVehicleType').val(data.vehicle_type);
+                $('#editLicensePlate').val(data.license_plate);
+                $('#editLatestMileage').val(data.latest_mileage);
+                $('#editFuelLevel').val(data.fuel_level);
+                $('#editModal').modal('show');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('ข้อผิดพลาด', 'ไม่สามารถโหลดข้อมูลได้', 'error');
+            });
+    
+});
+
+$('#editCarForm').on('submit', function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    $.ajax({
+        url: 'api/update_car.php', // Replace with your API endpoint
+        method: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            Swal.fire('สำเร็จ', 'แก้ไขข้อมูลรถเรียบร้อยแล้ว', 'success');
+            $('#editModal').modal('hide');
+            window.location.reload(); // Reload the table
+        },
+        error: function (xhr, status, error) {
+            console.error("Update Car Error:", xhr.responseText);
+            Swal.fire('ข้อผิดพลาด', 'ไม่สามารถแก้ไขข้อมูลรถได้', 'error');
+        }
+    });
+});
+
+$(document).on('click', '.deleteBtn', function () {
+    const carId = $(this).data('id');
+
+    Swal.fire({
+        title: 'คุณแน่ใจหรือไม่?',
+        text: 'คุณต้องการลบข้อมูลรถนี้หรือไม่?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'ใช่, ลบเลย!',
+        cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Delete car by ID
+            $.ajax({
+                url: 'api/delete_car.php', // Replace with your API endpoint
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ id: carId }),
+                success: function (response) {
+                    Swal.fire('สำเร็จ', 'ลบข้อมูลรถเรียบร้อยแล้ว', 'success');
+                    window.location.reload(); // Reload the table
+                },
+                error: function (xhr, status, error) {
+                    console.error("Delete Car Error:", xhr.responseText);
+                    Swal.fire('ข้อผิดพลาด', 'ไม่สามารถลบข้อมูลรถได้', 'error');
+                }
+            });
+        }
+    });
+});
+
 
 </script>
 
