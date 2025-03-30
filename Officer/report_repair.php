@@ -536,7 +536,6 @@ function saveStatus() {
     });
 }
 
-loadTable();
 
 
     $(document).on('click', '.delete-btn', function(event) {
@@ -663,7 +662,9 @@ loadTable();
         });
     }
 
-
+$(document).ready(function () {
+    loadTable();
+});
     
 
 
