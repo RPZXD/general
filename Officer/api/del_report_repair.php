@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $database = new Database_General();
+        $database = new Database("phichaia_general");
         $pdo = $database->getConnection();
 
         $report = new Report_repair($pdo);

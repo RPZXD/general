@@ -4,7 +4,7 @@ include_once("../../config/Database.php");
 include_once("../../class/Utils.php");
 
 // Initialize database connection
-$connectDB = new Database_General();
+$connectDB = new Database("phichaia_general");
 $db = $connectDB->getConnection();
 
 $teach_id = isset($_GET['teach_id']) ? $_GET['teach_id'] : die(json_encode(['success' => false, 'message' => 'Teacher ID not provided.']));

@@ -4,7 +4,7 @@ include_once("../../config/Database.php");
 include_once("../../class/Utils.php");
 
 // Initialize database connection
-$connectDB = new Database_General();
+$connectDB = new Database("phichaia_general");
 $db = $connectDB->getConnection();
 
 

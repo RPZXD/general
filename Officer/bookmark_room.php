@@ -8,10 +8,10 @@ include_once("../class/Utils.php");
 require_once('../class/Setting.php');
 
 // Initialize database connection
-$connectDB = new Database_User();
+$connectDB = new Database("phichaia_student");
 $db = $connectDB->getConnection();
 
-$connectDBgeneral = new Database_General();
+$connectDBgeneral = new Database("phichaia_general");
 $dbGeneral = $connectDBgeneral->getConnection();
 
 // Initialize UserLogin class
@@ -33,7 +33,7 @@ if (isset($_SESSION['Officer_login'])) {
     $sw2->renderAlert();
     exit;
 }
-$teacher_id = $userData['Teach_id'];
+$teacher_id = $_SESSION['Officer_login'];
 
 $config = new Setting_Config($dbGeneral);
 $locations = $config->fetchMeetingRooms();

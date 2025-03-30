@@ -8,7 +8,7 @@ include_once("../class/UserLogin.php");
 include_once("../class/Utils.php");
 
 // Initialize database connection
-$connectDB = new Database_User();
+$connectDB = new Database("phichaia_student");
 $db = $connectDB->getConnection();
 
 // Initialize UserLogin class
@@ -30,6 +30,8 @@ if (isset($_SESSION['Officer_login'])) {
     $sw2->renderAlert();
     exit;
 }
+
+$teacher_id = $_SESSION['Officer_login'];
 
 require_once('header.php');
 

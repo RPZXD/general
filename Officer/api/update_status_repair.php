@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 require_once '../../config/Database.php'; // Adjust the path as needed
 
 // Create a new database connection instance
-$database = new Database_General();
+$database = new Database("phichaia_general");
 $conn = $database->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

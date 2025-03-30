@@ -2,7 +2,7 @@
 require_once '../../config/Database.php'; // Adjust this path according to your setup
 
 // Create a new database connection instance
-$database = new Database_General();
+$database = new Database("phichaia_general");
 $conn = $database->getConnection();
 
 // Check if the request is a POST request

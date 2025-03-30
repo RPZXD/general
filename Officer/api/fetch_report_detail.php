@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 header('Content-Type: application/json');
 require_once '../../config/Database.php';
 require_once '../../class/Report_repair.php';
@@ -13,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if ($id) {
         try {
-            $database = new Database_General();
+            $database = new Database("phichaia_general");
             $pdo = $database->getConnection();
 
             $report = new Report_repair($pdo);

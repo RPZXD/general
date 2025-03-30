@@ -5,10 +5,10 @@ require_once '../../class/Report_repair.php'; // This file contains the Report_r
 require_once '../../class/User.php'; // This file contains the User class
 
 // Initialize the database connections
-$databaseUser = new Database_User();
+$databaseUser = new Database("phichaia_student");
 $dbUser = $databaseUser->getConnection();
 
-$databaseGeneral = new Database_General();
+$databaseGeneral = new Database("phichaia_general");
 $dbGeneral = $databaseGeneral->getConnection();
 
 // Check if the connections were successful

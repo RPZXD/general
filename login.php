@@ -62,12 +62,11 @@ redirectUser();
 
                 include_once("config/Database.php");
                 include_once("class/UserLogin.php");
-                include_once("class/Utils.php");
 
-                $connectDB = new Database_User();
-                $db = $connectDB->getConnection();
+                $studentDb = new Database("phichaia_student");
+                $studentConn = $studentDb->getConnection();
 
-                $user = new UserLogin($db);
+                $user = new UserLogin($studentConn);
                 $bs = new Bootstrap();
 
                 if (isset($_POST['signin'])) {

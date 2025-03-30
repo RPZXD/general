@@ -4,7 +4,7 @@ require_once '../../config/Database.php'; // Adjust this path according to your 
 require_once '../../class/Report_repair.php'; // This file contains the Subject class
 
 // Create an instance of Database_CKTeach
-$database = new Database_General();
+$database =new Database("phichaia_general");
 $pdo = $database->getConnection();
 
 // Check if connection was successful

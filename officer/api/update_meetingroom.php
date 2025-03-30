@@ -3,7 +3,7 @@
 include_once("../../config/Database.php");
 include_once("../../class/Setting.php");
 
-$database = new Database_General();
+$database = new Database("phichaia_general");
 $db = $database->getConnection();
 
 $config = new Setting_Config($db);

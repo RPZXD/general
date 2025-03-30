@@ -4,7 +4,7 @@ require_once '../../config/Database.php';
 require_once '../../class/Booking.php';
 
 // Create a new database connection instance
-$database = new Database_General();
+$database = new Database("phichaia_general");
 $conn = $database->getConnection();
 
 

@@ -3,7 +3,7 @@
 include_once("../../config/Database.php");
 
 // Initialize database connection
-$connectDB = new Database_General();
+$connectDB = new Database("phichaia_general");
 $db = $connectDB->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));

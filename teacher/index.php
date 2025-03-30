@@ -8,11 +8,11 @@ include_once("../class/UserLogin.php");
 include_once("../class/Utils.php");
 
 // Initialize database connection
-$connectDB = new Database_User();
-$db = $connectDB->getConnection();
+$studentDb = new Database("phichaia_student");
+$studentConn = $studentDb->getConnection();
 
 // Initialize UserLogin class
-$user = new UserLogin($db);
+$user = new UserLogin($studentConn);
 
 // Fetch terms and pee
 $term = $user->getTerm();

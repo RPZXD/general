@@ -8,7 +8,7 @@ header('Content-Type: application/json');
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    $connectDB = new Database_General();
+    $connectDB = new Database("phichaia_general");
     $db = $connectDB->getConnection();
 
     $query = "DELETE FROM meeting_rooms WHERE id = :id";

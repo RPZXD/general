@@ -3,14 +3,17 @@ require_once('config/Database.php');
 require_once('class/Report_repair.php');
 require_once('class/Booking.php');
 
-$connectDB = new Database_General();
-$db = $connectDB->getConnection();
+$studentDb = new Database("phichaia_student");
+$studentConn = $studentDb->getConnection();
+
+$generalDb = new Database("phichaia_general");
+$generalConn = $generalDb->getConnection();
 
 // Initialize UserLogin class
-$report = new Report_repair($db);
+$report = new Report_repair($generalConn);
                 
 // Initialize UserLogin class
-$booking = new Booking($db);
+$booking = new Booking($generalConn);
 
 
 require_once('header.php');

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
     try {
         // Create a new instance of Database_General
-        $database = new Database_General();
+        $database = new Database("phichaia_general");
         $pdo = $database->getConnection();
 
         // Create an instance of the booking class

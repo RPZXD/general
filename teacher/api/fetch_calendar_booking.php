@@ -4,10 +4,10 @@ require_once '../../class/Booking.php';
 require_once '../../class/UserLogin.php';
 
 // Create a new database connection instance
-$database = new Database_General();
+$database = new Database("phichaia_general");
 $conn = $database->getConnection();
 
-$database_user = new Database_User();
+$database_user = new Database("phichaia_student");
 $db = $database_user->getConnection();
 
 // Initialize Booking class
