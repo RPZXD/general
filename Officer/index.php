@@ -57,28 +57,51 @@ require_once('header.php');
     <!-- /.content-header -->
 
     <section class="content">
-
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                        <div class="callout callout-success text-center">
-                            <h4>ยินดีต้อนรับคุณครู  <?php echo $userData['Teach_name'] ?> เข้าสู่ระบบบริหารทั่วไป | โรงเรียนพิชัย</h4>
+      <div class="container-fluid">
+              <div class="row">
+                <div class="w-full">
+                        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 text-center">
+                            <h4 class="text-lg font-semibold">ยินดีต้อนรับเข้าสู่<?php echo $setting->getPageTitle() ?></h4>
                         </div>
-                </div>
-            </div>
-            
+                    </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="flex flex-wrap mt-4">
+                        <div class="w-full md:w-1/3 px-2 mb-4">
+                          <!-- small box -->  
+                          <div class="bg-blue-500 text-white p-4 rounded-lg shadow">
+                            <p class="mt-2">ระบบการแจ้งซ่อม</p>
+                          </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="w-full md:w-1/3 px-2 mb-4">
+                          <!-- small box -->
+                          <div class="bg-pink-500 text-white p-4 rounded-lg shadow">
+                            <p class="mt-2">ระบบจองห้องประชุม</p>
+                          </div>
+                        </div>
+                        <div class="w-full md:w-1/3 px-2 mb-4">
+                          <!-- small box -->
+                          <div class="bg-green-500 text-white p-4 rounded-lg shadow">
+                            <p class="mt-2">ระบบจองรถ</p>
+                          </div>
+                        </div>
 
-                
-                
-            
+                    
+                    </div>
+                  </div>
+              </div>
 
+              </div>
+                  
 
-                
+          
 
-        </div>
-    </div><!-- /.container-fluid -->
-        
-    </section>
+                  
+
+      </div>
+  </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

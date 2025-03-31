@@ -311,6 +311,7 @@ $(document).ready(function () {
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
+            cancelButtonText: 'ยกเลิก',
             confirmButtonText: 'ใช่, ลบเลย!'
         }).then((result) => {
             if (result.isConfirmed) {
