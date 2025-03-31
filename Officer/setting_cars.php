@@ -207,6 +207,9 @@ require_once('header.php');
 $(document).ready(function () {
     // Load table function
     function loadTable() {
+        // Show loading toast before the table content loads
+        const toast = showToast("กำลังโหลดข้อมูล...", "info");
+
         $.ajax({
             url: 'api/fetch_cars.php',
             method: 'GET',
@@ -231,7 +234,9 @@ $(document).ready(function () {
 
                         var row = `<tr>
                             <td class="text-center">${data.id}</td>
-                            <td class="text-center flex justify-center items-center"> <img src="../${data.image_url}" class="w-[25px] h-[25px] rounded-lg"></td>
+                            <td class="text-center flex justify-center items-center"> 
+                                <img src="../${data.image_url}" class="w-[50px] h-[50px] rounded-lg" style="max-width: 50px; max-height: 50px;">
+                            </td>
                             <td class="text-center">${data.vehicle_type}</td>
                             <td class="text-center">${data.license_plate}</td>
                             <td class="text-center">${mileageFormatted}</td>
