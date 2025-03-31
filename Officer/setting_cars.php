@@ -205,21 +205,22 @@ require_once('header.php');
 
 <script>
 $(document).ready(function () {
+    // Load table function
     function loadTable() {
         $.ajax({
             url: 'api/fetch_cars.php',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-                $('#record_table').DataTable().clear().destroy(); // ล้างข้อมูลเก่า
+                $('#record_table').DataTable().clear().destroy(); // Clear old data
                 $('#record_table tbody').empty();
 
                 if (response.length === 0) {
                     $('#record_table tbody').append('<tr><td colspan="8" class="text-center">ไม่พบข้อมูล</td></tr>');
                 } else {
                     $.each(response, function(index, data) {
-                        var mileageFormatted = Number(data.latest_mileage).toLocaleString(); // ใส่ ,
-                        var fuelFormatted = `<i class="fas fa-gas-pump text-red-500 text-lg"></i> ${data.fuel_level}%`; // ไอคอนน้ำมัน
+                        var mileageFormatted = Number(data.latest_mileage).toLocaleString(); // Format mileage
+                        var fuelFormatted = `<i class="fas fa-gas-pump text-red-500 text-lg"></i> ${data.fuel_level}%`; // Fuel icon
                         
                         var statusChecked = data.status === "1" ? "checked" : "";
                         var statusToggle = `
@@ -245,11 +246,11 @@ $(document).ready(function () {
                     });
                 }
 
-                // ตั้งค่า DataTable
+                // Initialize DataTable
                 $('#record_table').DataTable({
                     "pageLength": 10,
-                    "scrollY": "600px", // เพิ่มพื้นที่เลื่อนแนวตั้ง
-                    "scrollCollapse": true, // เปิดใช้งานการยุบพื้นที่เลื่อน
+                    "scrollY": "600px", // Vertical scroll area
+                    "scrollCollapse": true, // Enable scroll collapse
                     "searching": true,
                     "ordering": true,
                     "paging": true,
@@ -278,35 +279,109 @@ $(document).ready(function () {
         });
     }
 
-    loadTable();
+    loadTable(); // Initial load of the table
 
+    // Add car form submit
     $('#addCarForm').on('submit', function (e) {
-            e.preventDefault();
+        e.preventDefault();
     
-            const formData = new FormData(this);
+        const formData = new FormData(this);
     
-            $.ajax({
-                url: 'api/add_car.php', // Replace with your API endpoint
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    Swal.fire('สำเร็จ', 'เพิ่มรถใหม่เรียบร้อยแล้ว', 'success');
-                                    // โหลดตารางข้อมูลใหม่หลังจากปิด modal
-                    window.location.reload();
-                },
-                error: function (xhr, status, error) {
-                    // console.error("Add Car Error:", xhr.responseText);
-                    Swal.fire('ข้อผิดพลาด', 'ไม่สามารถเพิ่มรถได้', 'error');
-                }
-            });
+        $.ajax({
+            url: 'api/add_car.php', // Replace with your API endpoint
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                Swal.fire('สำเร็จ', 'เพิ่มรถใหม่เรียบร้อยแล้ว', 'success');
+                loadTable(); // Reload the table data
+                $('#addCarModal').modal('hide'); // Close modal
+            },
+            error: function (xhr, status, error) {
+                Swal.fire('ข้อผิดพลาด', 'ไม่สามารถเพิ่มรถได้', 'error');
+            }
         });
+    });
+
+    // Edit car button click
+    $(document).on('click', '.editBtn', function () {
+        const id = $(this).data('id');
+        fetch(`api/get_car.php?id=${id}`)
+            .then(response => response.json())
+            .then(data => {
+                $('#editCarId').val(data.id);
+                $('#editVehicleType').val(data.vehicle_type);
+                $('#editLicensePlate').val(data.license_plate);
+                $('#editLatestMileage').val(data.latest_mileage);
+                $('#editFuelLevel').val(data.fuel_level);
+                $('#editModal').modal('show');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('ข้อผิดพลาด', 'ไม่สามารถโหลดข้อมูลได้', 'error');
+            });
+    });
+
+    // Edit car form submit
+    $('#editCarForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        $.ajax({
+            url: 'api/update_car.php', // Replace with your API endpoint
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                Swal.fire('สำเร็จ', 'แก้ไขข้อมูลรถเรียบร้อยแล้ว', 'success');
+                $('#editModal').modal('hide'); // Close modal
+                loadTable(); // Reload the table data
+            },
+            error: function (xhr, status, error) {
+                console.error("Update Car Error:", xhr.responseText);
+                Swal.fire('ข้อผิดพลาด', 'ไม่สามารถแก้ไขข้อมูลรถได้', 'error');
+            }
+        });
+    });
+
+    // Delete car button click
+    $(document).on('click', '.deleteBtn', function () {
+        const carId = $(this).data('id');
+
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'คุณต้องการลบข้อมูลรถนี้หรือไม่?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'ใช่, ลบเลย!',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: 'api/delete_car.php', // Replace with your API endpoint
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ id: carId }),
+                    success: function (response) {
+                        Swal.fire('สำเร็จ', 'ลบข้อมูลรถเรียบร้อยแล้ว', 'success');
+                        loadTable(); // Reload the table data
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Delete Car Error:", xhr.responseText);
+                        Swal.fire('ข้อผิดพลาด', 'ไม่สามารถลบข้อมูลรถได้', 'error');
+                    }
+                });
+            }
+        });
+    });
 });
 
-
-
-// ฟังก์ชันอัปเดตสถานะรถ
+// Update vehicle status function
 function updateStatus(vehicleId, isChecked) {
     let newStatus = isChecked ? '1' : '0';
 
@@ -324,81 +399,6 @@ function updateStatus(vehicleId, isChecked) {
         }
     });
 }
-
-$(document).on('click', '.editBtn', function () {
-    const id = $(this).data('id');
-        fetch(`api/get_car.php?id=${id}`)
-            .then(response => response.json())
-            .then(data => {
-                $('#editCarId').val(data.id);
-                $('#editVehicleType').val(data.vehicle_type);
-                $('#editLicensePlate').val(data.license_plate);
-                $('#editLatestMileage').val(data.latest_mileage);
-                $('#editFuelLevel').val(data.fuel_level);
-                $('#editModal').modal('show');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire('ข้อผิดพลาด', 'ไม่สามารถโหลดข้อมูลได้', 'error');
-            });
-    
-});
-
-$('#editCarForm').on('submit', function (e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-
-    $.ajax({
-        url: 'api/update_car.php', // Replace with your API endpoint
-        method: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            Swal.fire('สำเร็จ', 'แก้ไขข้อมูลรถเรียบร้อยแล้ว', 'success');
-            $('#editModal').modal('hide');
-            window.location.reload(); // Reload the table
-        },
-        error: function (xhr, status, error) {
-            console.error("Update Car Error:", xhr.responseText);
-            Swal.fire('ข้อผิดพลาด', 'ไม่สามารถแก้ไขข้อมูลรถได้', 'error');
-        }
-    });
-});
-
-$(document).on('click', '.deleteBtn', function () {
-    const carId = $(this).data('id');
-
-    Swal.fire({
-        title: 'คุณแน่ใจหรือไม่?',
-        text: 'คุณต้องการลบข้อมูลรถนี้หรือไม่?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'ใช่, ลบเลย!',
-        cancelButtonText: 'ยกเลิก'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Delete car by ID
-            $.ajax({
-                url: 'api/delete_car.php', // Replace with your API endpoint
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ id: carId }),
-                success: function (response) {
-                    Swal.fire('สำเร็จ', 'ลบข้อมูลรถเรียบร้อยแล้ว', 'success');
-                    window.location.reload(); // Reload the table
-                },
-                error: function (xhr, status, error) {
-                    console.error("Delete Car Error:", xhr.responseText);
-                    Swal.fire('ข้อผิดพลาด', 'ไม่สามารถลบข้อมูลรถได้', 'error');
-                }
-            });
-        }
-    });
-});
 
 
 </script>

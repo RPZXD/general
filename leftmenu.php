@@ -12,7 +12,7 @@ function createNavItem($href, $iconClass, $text) {
 
 echo createNavItem('index.php', 'fas fa-home', 'หน้าหลัก');
 // echo createNavItem('report.php', 'fas fa-clipboard', 'รายงานการสอน');
-echo createNavItem('faq.php', 'fas fa-question', 'วิธีการใช้งาน');
+// echo createNavItem('faq.php', 'fas fa-question', 'วิธีการใช้งาน');
 // echo createNavItem('add_subject.php', 'fas fa-pen', 'จัดการรายวิชา');
 echo createNavItem('login.php', 'fas fa-sign-in-alt', 'ลงชื่อเข้าสู่ระบบ');
 ?>

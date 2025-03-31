@@ -47,7 +47,7 @@ function createNavSubMenu($iconClass, $text, $subItems) {
 $subItems_Setting = [
     ['href' => 'setting_meetingroom.php', 'iconClass' => 'fa-user-plus', 'text' => 'ตั้งค่าห้องประชุม'],
     ['href' => 'setting_cars.php', 'iconClass' => 'fa-user-plus', 'text' => 'ตั้งค่ารถยนต์'],
-    ['href' => 'setting_drivers.php', 'iconClass' => 'fa-user-plus', 'text' => 'ตั้งค่าคนขับรถ']
+    ['href' => 'setting_driver.php', 'iconClass' => 'fa-user-plus', 'text' => 'ตั้งค่าคนขับรถ']
 ];
 
 echo createNavItemName(htmlspecialchars($setting->getImgProfile().$userData['Teach_photo']), htmlspecialchars($userData['Teach_name']));

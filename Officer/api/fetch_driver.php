@@ -5,14 +5,14 @@
 // ini_set('display_errors', 0); // Suppress errors in the output
 
 include_once("../../config/Database.php");
-include_once("../../class/Car.php");
+include_once("../../class/Driver.php");
 
 $connectDB = new Database("phichaia_general");
 $db = $connectDB->getConnection();
 
-$car = new Car($db);
+$driver = new Driver($db);
 
-$data = $car->fetchVehicles(); // Fetch all cars from the database
+$data = $driver->fetchDrivers(); // Fetch all cars from the database
 
 if ($data) {
     echo json_encode($data); // Return JSON response
